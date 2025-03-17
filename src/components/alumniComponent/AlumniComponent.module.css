@@ -1,0 +1,78 @@
+.card {
+    display: flex;
+    flex-direction: row;
+    background: var(--sky);
+    gap: 20px;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+    transition: transform 0.1s ease, box-shadow 0.1s ease; /* Smooth hover effect */
+}
+
+.card:hover {
+    transform: scale(1.05); /* Slight lift on hover */
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.top {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.comon {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.image {
+    border-radius: 50%;
+    object-fit: cover;
+    transition: transform 0.1s ease-in-out;
+}
+
+.image:hover {
+    transform: scale(1.1); /* Subtle zoom effect on hover */
+}
+
+.name {
+    font-size: 16px;
+    font-weight: bolder;
+}
+
+.graduation {
+    color: black;
+    width: 20px;
+    height: 20px;
+}
+
+.para {
+    font-size: 12px;
+}
+
+.links {
+    font-size: 12px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    font-weight: bold;
+    color: black;
+}
+
+.links a {
+    text-decoration: none;
+    color: black;
+    transition: color 0.1s ease;
+}
+
+.links a:hover {
+    color: #007bff; /* Subtle color change on hover */
+}
