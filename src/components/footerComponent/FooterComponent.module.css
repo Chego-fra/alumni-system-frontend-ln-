@@ -1,0 +1,158 @@
+.footerContainer{
+    background: black;
+    padding: 96px 10%;
+    width: 100%;
+  }
+  .topSection{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    gap: 50px;
+  }
+  .logo{
+    font-size: 18px;
+    font-weight: bolder;
+    color: red;
+    transition: all 0.3s ease;
+  }
+  .leftSection{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+  }
+  .logo:hover{
+    transform: scale(1.15);
+    color: white;
+  }
+  .para{
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+  }
+  .boldText{
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+  }
+  .socialIcons{
+    display: flex;
+    gap: 20px;
+  }
+  .centerSection{
+    display: flex;
+    width: 100%;
+    gap: 20px;
+  }
+  .sectionTitle{
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: red;
+  }
+  .sectionTitle::after {
+    content: "";
+    display: block;
+    width: 30px;
+    height: 2px;
+    background-color: red;
+    margin-top: 5px;
+    transition: width 0.3s ease-in-out;
+  }
+  
+  .sectionTitle:hover::after {
+    width: 100%;
+  }
+  .linkList{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    font-size: 12px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    color: white;
+  }
+  .link:hover{
+    transform: scale(1.15);
+    color: red;
+  }
+  .rightSection{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .subscribeContainer {
+    display: flex;
+    align-items: center;
+  }
+  
+  .emailInput {
+    padding: 16px;
+    width: 75%;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s ease-in-out;
+  }
+  
+  .emailInput:focus {
+    border-color: red;
+    outline: none;
+  }
+  
+  .subscribeButton {
+    width: 25%;
+    height: 100%;
+    background-color: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+    font-size: 12px;
+  }
+  
+  .subscribeButton:hover {
+    transform: scale(1.1);
+  }
+  .parag{
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: white;
+  }
+  .bottomSection{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 40px;
+  }
+  .bottomLinks{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  
+  }
+  .copyright{
+    font-weight: bold;
+    font-size: 14px;
+    color: white;
+  }
+  .grayText{
+    color: gray;
+    font-size: 12px;
+  }
+  .boldTexts{
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+  }
+  @media (max-width: 768px){
+    .topSection{
+      display: flex;
+      flex-direction: column;
+    }
+    .subscribeButton {
+      width: 25%;
+      height: 100%;
+      padding: 18px 0;
+    }
+  }

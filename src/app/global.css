@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+:root {
+    --sky: #C3EBFA;
+    --skyLight: #EDF9FD;
+    --purple: #CFCEFF;
+    --purpleLight: #F1F0FF;
+    --yellow: #FAE27C;
+    --yellowLight: #FEFCE8;
+  }
+  html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      overflow-x: hidden;
+      /* background: #F7F8FA; */
+    }
