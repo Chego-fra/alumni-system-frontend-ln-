@@ -4,6 +4,8 @@ import alumniData from '@/components/data/alumnidata/AlumniData';
 import AlumniCard from '@/components/alumniComponent/AlumniComponent';
 import eventData from '@/components/data/eventdata/EventData';
 import EventCard from '@/components/eventComponent/EventComponent';
+import careerData from '@/components/data/careerdata/CareerData';
+import CareerCard from '@/components/careerComponent/CareerComponent';
 
 const HomePage = () => {
   return (
@@ -34,6 +36,20 @@ const HomePage = () => {
             </div>
             <a href="/event" className={styles.link}>View All Events</a>
         </div>
+
+        <div className={styles.directorySection}>
+        <div className={styles.top}>
+        <h1 className={styles.directorySectionH1}>Find Your Next Dream Job</h1>
+        <h2 className={styles.directorySectionH2}>Featured Career</h2>
+        </div>
+            <div className={styles.grid}>
+                {careerData .slice(0, 4).map(career => (
+                    <CareerCard key={career.id} career={career} />
+                ))}
+            </div>
+            <a href="/career" className={styles.link}>View All Careers</a>
+        </div>
+
     </div>
   );
 };
