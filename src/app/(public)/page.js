@@ -2,6 +2,8 @@ import Slider from '@/components/sliderComponet/SliderComponent';
 import styles from './page.module.css';
 import alumniData from '@/components/data/alumnidata/AlumniData';
 import AlumniCard from '@/components/alumniComponent/AlumniComponent';
+import eventData from '@/components/data/eventdata/EventData';
+import EventCard from '@/components/eventComponent/EventComponent';
 
 const HomePage = () => {
   return (
@@ -18,6 +20,19 @@ const HomePage = () => {
                 ))}
             </div>
             <a href="/directory" className={styles.link}>View All Alumni</a>
+        </div>
+
+        <div className={styles.directorySection}>
+        <div className={styles.top}>
+        <h1 className={styles.directorySectionH1}>Upcoming Alumni Events</h1>
+        <h2 className={styles.directorySectionH2}>Featured Events</h2>
+        </div>
+            <div className={styles.grid}>
+                {eventData .slice(0, 4).map(event => (
+                    <EventCard key={event.id} event={event} />
+                ))}
+            </div>
+            <a href="/event" className={styles.link}>View All Events</a>
         </div>
     </div>
   );
