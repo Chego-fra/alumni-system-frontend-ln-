@@ -14,7 +14,9 @@ const nextConfig = {
       "tse3.mm.bing.net",
       "tse5.mm.bing.net",
       "tse6.mm.bing.net",
-      "www.pexels.com"
+      "www.pexels.com",
+      "youtu.be",
+      "www.youtube.com"
     ],
   },
 };

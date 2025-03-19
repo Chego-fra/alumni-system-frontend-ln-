@@ -51,7 +51,6 @@ const Navbar = () => {
             <div className={styles.dropDown}>
                 <button className={styles.dropDownBtn}>More</button>
                 <div className={styles.dropDownContent}>
-                <Link href="/donate" className={styles.dropdownItem}>Donate</Link>
                 <Link href="/resources" className={styles.dropdownItem}>Resources</Link>
                 <Link href="/contact" className={styles.dropdownItem}>Contact</Link>
                 </div>
@@ -83,7 +82,6 @@ const Navbar = () => {
             <Link href="/events" className={styles.mobileLink}>Events</Link>
             <Link href="/jobs" className={styles.mobileLink}>Careers</Link>
             <Link href="/news" className={styles.mobileLink}>News</Link>
-            <Link href="/donate" className={styles.mobileLink}>Donate</Link>
             <Link href="/resources" className={styles.mobileLink}>Resources</Link>
             <Link href="/contact" className={styles.mobileLink}>Contact</Link>
             <div className={styles.mobileAuth}>
