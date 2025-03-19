@@ -6,6 +6,10 @@ import eventData from '@/components/data/eventdata/EventData';
 import EventCard from '@/components/eventComponent/EventComponent';
 import careerData from '@/components/data/careerdata/CareerData';
 import CareerCard from '@/components/careerComponent/CareerComponent';
+import galleryData from '@/components/data/gallerydata/GalleryData';
+import GalleryCard from '@/components/galleryComponent/GalleryComponent';
+import resourcesData from '@/components/data/resoursesdata/ResourcesData';
+import ResourceCard from '@/components/resourcesComponent/ResourcesComponent';
 
 const HomePage = () => {
   return (
@@ -48,6 +52,35 @@ const HomePage = () => {
                 ))}
             </div>
             <a href="/career" className={styles.link}>View All Careers</a>
+        </div>
+
+
+        <div className={styles.directorySection}>
+        <div className={styles.top}>
+        <h1 className={styles.directorySectionH1}>Capturing Moments, Celebrating Memories</h1>
+        <h2 className={styles.directorySectionH2}>Featured Gallery</h2>
+        </div>
+            <div className={styles.grid}>
+                {galleryData .slice(0, 4).map(gallery => (
+                    <GalleryCard key={gallery.id} gallery={gallery} />
+                ))}
+            </div>
+            <a href="/gallery" className={styles.link}>View All Galleries</a>
+        </div>
+
+
+
+        <div className={styles.directorySection}>
+        <div className={styles.top}>
+        <h1 className={styles.directorySectionH1}>Empowering Alumni with Knowledge & Tools</h1>
+        <h2 className={styles.directorySectionH2}>Featured Resource</h2>
+        </div>
+            <div className={styles.grid}>
+                {resourcesData .slice(0, 4).map(resource => (
+                    <ResourceCard key={resource.id} resource={resource} />
+                ))}
+            </div>
+            <a href="/resources" className={styles.link}>View All Resource</a>
         </div>
 
     </div>
