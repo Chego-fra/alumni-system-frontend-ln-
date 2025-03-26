@@ -13,9 +13,8 @@ import AuthSessionStatus from '@/app/(auth)/AuthSessionStatus'
 const Login = () => {
     const router = useRouter()
 
-    const { login } = useAuth({
+    const { login, user  } = useAuth({
         middleware: 'guest',
-        redirectIfAuthenticated: '/dashboard',
     })
 
     const [email, setEmail] = useState('')
@@ -25,12 +24,17 @@ const Login = () => {
     const [status, setStatus] = useState(null)
 
     useEffect(() => {
-        if (router.reset?.length > 0 && errors.length === 0) {
-            setStatus(atob(router.reset))
-        } else {
-            setStatus(null)
+        if (user) {
+            if (user.role === 'admin') {
+                router.push('/dashboard/admin');
+            } else if (user.role === 'faculty') {
+                router.push('/dashboard/faculty');
+            } else {
+                router.push('/dashboard/alumni');
+            }
         }
-    })
+    }, [user]);
+    
 
     const submitForm = async event => {
         event.preventDefault()

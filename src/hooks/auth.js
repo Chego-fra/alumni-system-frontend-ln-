@@ -89,34 +89,43 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             })
     }
 
-    const resendEmailVerification = ({ setStatus }) => {
+    const resendEmailVerification = async ({ setStatus }) => {
         axios
             .post('/email/verification-notification')
-            .then(response => setStatus(response.data.status))
-    }
+            .then(response => setStatus(response.data.status));
+    
+        // 🔥 Fetch the latest user data after verification
+        mutate();
+    };
+    
 
     const logout = async () => {
         if (!error) {
             await axios.post('/logout').then(() => mutate())
         }
 
-        window.location.pathname = '/login'
+        window.location.pathname = '/'
     }
 
     useEffect(() => {
-        if (middleware === 'guest' && redirectIfAuthenticated && user)
-            router.push(redirectIfAuthenticated)
-
-        if (middleware === 'auth' && !user?.email_verified_at)
-            router.push('/verify-email')
-
-        if (
-            window.location.pathname === '/verify-email' &&
-            user?.email_verified_at
-        )
-            router.push(redirectIfAuthenticated)
-        if (middleware === 'auth' && error) logout()
-    }, [user, error])
+        if (middleware === 'guest' && redirectIfAuthenticated && user) {
+            if (user.role === 'admin') {
+                router.push('/dashboard/admin');
+            } else if (user.role === 'faculty') {
+                router.push('/dashboard/faculty');
+            } else {
+                router.push('/dashboard/alumni'); // Default
+            }
+        }
+    
+        if (middleware === 'auth' && !user?.email_verified_at && user?.created_at > '2025-03-01') {
+            router.push('/verify-email');
+        }
+        
+    
+        if (middleware === 'auth' && error) logout();
+    }, [user, error]);
+    
 
     return {
         user,
