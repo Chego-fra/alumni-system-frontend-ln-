@@ -11,9 +11,13 @@ const FacultyDashboard = () => {
         if (user && user.role !== 'faculty') {
             router.push('/'); // Redirect unauthorized users
         }
-    }, [user]);
+    }, [user, router]);
 
-    return <div>Welcome, Faculty!</div>;
+    if (!user) {
+        return <div>Loading...</div>; 
+    }
+
+    return <div>Welcome, {user.name}!</div>;
 };
 
 export default FacultyDashboard;

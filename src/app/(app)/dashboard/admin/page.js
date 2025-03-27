@@ -9,11 +9,15 @@ const AdminDashboard = () => {
 
     useEffect(() => {
         if (user && user.role !== 'admin') {
-            router.push('/'); // Redirect unauthorized users
+            router.push('/'); 
         }
-    }, [user]);
+    }, [user, router]);
 
-    return <div>Welcome, Admin!</div>;
+    if (!user) {
+        return <div>Loading...</div>; 
+    }
+
+    return <div>Welcome, {user.name}!</div>;
 };
 
 export default AdminDashboard;

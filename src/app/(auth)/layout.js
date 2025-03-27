@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import AuthCard from '@/app/(auth)/AuthCard'
 import ApplicationLogo from '@/components/ApplicationLogo'
+import DynamicBackground from '@/components/backgroundComponent/DynamicBackground'
+
 
 export const metadata = {
     title: 'Laravel',
@@ -10,6 +12,7 @@ const Layout = ({ children }) => {
     return (
         <div>
             <div className="text-gray-900 antialiased">
+            <DynamicBackground/>
                 <AuthCard
                     logo={
                         <Link href="/">
@@ -17,6 +20,7 @@ const Layout = ({ children }) => {
                         </Link>
                     }
                 >
+                    
                     {children}
                 </AuthCard>
             </div>

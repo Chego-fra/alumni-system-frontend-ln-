@@ -1,0 +1,56 @@
+.container{
+    /* background: #F7F8FA; */
+    height: 100vh;
+    display: flex;
+}
+.left {
+    width: 14%;
+    padding: 16px;
+    background: white; 
+  }
+  .span{
+    display: none;
+  }
+  .right{
+    width: 86%;
+    background: #F7F8FA;
+  }
+  
+  @media (min-width: 768px) { 
+    .left {
+      width: 8%;
+    }
+    .right {
+        width: 92%;
+      }
+      .span{
+        display: flex;
+        font-weight: bold;
+        font-size: 14px;
+        justify-content: start;
+      }
+  }
+  
+  @media (min-width: 1024px) { 
+    .left {
+      width: 16%;
+    }
+    .right {
+        width: 84%;
+      }
+  }
+  
+  @media (min-width: 1280px) { 
+    .left {
+      width: 14%;
+    }
+    .right {
+        width: 86%;
+      }
+  }
+  .logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+  }

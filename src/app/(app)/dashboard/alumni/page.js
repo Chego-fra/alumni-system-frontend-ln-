@@ -11,9 +11,13 @@ const AlumniDashboard = () => {
         if (user && user.role !== 'alumni') {
             router.push('/'); // Redirect unauthorized users
         }
-    }, [user]);
+    }, [user, router]);
 
-    return <div>Welcome, Alumni!</div>;
+    if (!user) {
+        return <div>Loading...</div>; 
+    }
+
+    return <div>Welcome, {user.name}!</div>;
 };
 
 export default AlumniDashboard;
