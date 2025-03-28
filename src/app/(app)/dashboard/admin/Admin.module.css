@@ -1,6 +1,6 @@
 .container{
     /* background: #F7F8FA; */
-    height: 100vh;
+    min-height: 100vh; 
     display: flex;
 }
 .left {
@@ -53,4 +53,12 @@
     align-items: center;
     justify-content: center;
     gap: 2px;
+  }
+  .pagecontainer{
+    margin: 1%;
+    height: 100vh;
+  }
+  .card{
+    display: flex;
+    gap: ;
   }

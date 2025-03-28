@@ -9,27 +9,27 @@ const AlumnimenuItems = [
             {
                 icon: "/home1.png",
                 label: "Home",
-                href: "/dashboard/admin"
+                href: "/dashboard/faculty"
             },
             {
                 icon: "/career.png",
                 label: "Career",
-                href: "/dashboard/list/career"
+                href: "/dashboard/alumni/list/career"
             },
             {
                 icon: "/event.png",
                 label: "Event",
-                href: "/dashboard/list/event"
+                href: "/dashboard/alumni/list/event"
             },
             {
                 icon: "/gallery.png",
                 label: "Gallery",
-                href: "/dashboard/list/gallery"
+                href: "/dashboard/alumni/list/gallery"
             },
             {
                 icon: "/resources.png",
                 label: "Resources",
-                href: "/dashboard/list/resource"
+                href: "/dashboard/alumni/list/resource"
             },
         ]
     },
@@ -39,17 +39,17 @@ const AlumnimenuItems = [
           {
             icon: "/profile.png",
             label: "Profile",
-            href: "/dashboard/admin/profile.js",
+            href: "/dashboard/alumni/profile",
           },
           {
             icon: "/setting.png",
             label: "Settings",
-            href: "/dashboard/admin/settings.js",
+            href: "/dashboard/alumni/settings",
           },
           {
             icon: "/logout.png",
             label: "Logout",
-            href: "/dashboard/logout",
+            href: "/dashboard/alumni/logout",
           },
         ],
       },

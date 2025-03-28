@@ -9,17 +9,17 @@ const FacultymenuItems = [
             {
                 icon: "/home1.png",
                 label: "Home",
-                href: "/dashboard/admin"
+                href: "/dashboard/faculty"
             },
             {
                 icon: "/user.png",
                 label: "Alumni",
-                href: "/dashboard/list/alumni"
+                href: "/dashboard/faculty/list/alumni"
             },
             {
                 icon: "/event.png",
                 label: "Event",
-                href: "/dashboard/list/event"
+                href: "/dashboard/faculty/list/event"
             },
         ]
     },
@@ -29,17 +29,17 @@ const FacultymenuItems = [
           {
             icon: "/profile.png",
             label: "Profile",
-            href: "/dashboard/admin/profile.js",
+            href: "/dashboard/faculty/profile",
           },
           {
             icon: "/setting.png",
             label: "Settings",
-            href: "/dashboard/admin/settings.js",
+            href: "/dashboard/faculty/settings",
           },
           {
             icon: "/logout.png",
             label: "Logout",
-            href: "/dashboard/logout",
+            href: "/dashboard/faculty/logout",
           },
         ],
       },

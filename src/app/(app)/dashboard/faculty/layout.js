@@ -13,7 +13,7 @@ const FacultyLayout = ({ children }) => {
       <div className={styles.left}>
         <Link href="/dashboard/admin" className={styles.logo}>
           <Image src="/istlogo.png" alt="logo" width={52} height={52}/>
-          <span className={styles.span}>Alumni Dashboard </span>
+          <span className={styles.span}>Faculty Dashboard </span>
         </Link>
         <FacultyMenu />
       </div>

@@ -1,0 +1,33 @@
+.container{
+    border-radius: 16px;
+    padding: 16px;
+    flex: 1;
+    min-width: 130px;
+}
+.container:nth-child(odd){
+    background: var(--purple);
+}
+.container:nth-child(even){
+    background: var(--yellow);
+}
+.date{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.sapn{
+    font-size: 10px;
+    background: white;
+    padding: 8px 0;
+    border-radius: 8px;
+    color: #16a34a;
+}
+.count{
+    margin: 12px 0;
+    font-size: 16px;
+    font-weight: 500;
+}
+.h2{
+    font-size: 12px;
+    font-weight: bold;
+}

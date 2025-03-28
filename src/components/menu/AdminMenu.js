@@ -14,27 +14,27 @@ const AdminmenuItems = [
             {
                 icon: "/user.png",
                 label: "Alumni",
-                href: "/dashboard/list/alumni"
+                href: "/dashboard/admin/list/alumni"
             },
             {
                 icon: "/career.png",
                 label: "Career",
-                href: "/dashboard/list/career"
+                href: "/dashboard/admin/list/career"
             },
             {
                 icon: "/event.png",
                 label: "Event",
-                href: "/dashboard/list/event"
+                href: "/dashboard/admin/list/event"
             },
             {
                 icon: "/gallery.png",
                 label: "Gallery",
-                href: "/dashboard/list/gallery"
+                href: "/dashboard/admin/list/gallery"
             },
             {
                 icon: "/resources.png",
                 label: "Resources",
-                href: "/dashboard/list/resource"
+                href: "/dashboard/admin/list/resource"
             },
         ]
     },
@@ -44,17 +44,17 @@ const AdminmenuItems = [
           {
             icon: "/profile.png",
             label: "Profile",
-            href: "/dashboard/admin/profile.js",
+            href: "/dashboard/admin/profile",
           },
           {
             icon: "/setting.png",
             label: "Settings",
-            href: "/dashboard/admin/settings.js",
+            href: "/dashboard/admin/settings",
           },
           {
             icon: "/logout.png",
             label: "Logout",
-            href: "/dashboard/logout",
+            href: "/dashboard/admin/logout",
           },
         ],
       },

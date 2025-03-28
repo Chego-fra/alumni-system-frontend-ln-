@@ -19,11 +19,15 @@
 .lis:hover{
     background: var(--sky);
 }
+.span{
+  display: none;
+}
 
 @media (min-width: 768px) { /* md */
     /* .lis {
       padding: 0 8px;
     } */
+
   }
 @media (min-width: 1024px) { /* lg */
     .h3 {
@@ -36,5 +40,8 @@
     }
     .lis{
         justify-content: start;
+    }
+    .span{
+      display: flex;
     }
   }
