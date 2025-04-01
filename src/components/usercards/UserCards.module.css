@@ -1,5 +1,5 @@
 .container{
-    border-radius: 16px;
+    border-radius: 8px;
     padding: 16px;
     flex: 1;
     min-width: 130px;
@@ -18,8 +18,8 @@
 .sapn{
     font-size: 10px;
     background: white;
-    padding: 8px 0;
-    border-radius: 8px;
+    padding: 8px 10px;
+    border-radius: 5px;
     color: #16a34a;
 }
 .count{

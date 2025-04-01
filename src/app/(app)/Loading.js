@@ -1,9 +1,19 @@
-const Loading = () => {
-    return (
-        <div className="flex min-h-screen w-full items-center justify-center bg-gray-100">
-            Loading...
-        </div>
-    )
-}
+import Image from "next/image";
 
-export default Loading
+const Loading = () => {
+  return (
+    <div className="w-full min-h-screen flex flex-col items-center justify-center">
+      <Image 
+        src="/giphy.webp" 
+        alt="Loading..." 
+        width={80} 
+        height={80} 
+        className="mb-4" 
+      />
+      <p className="text-lg font-semibold text-gray-700">Loading...</p>
+    </div>
+  );
+};
+
+export default Loading;
+ 
