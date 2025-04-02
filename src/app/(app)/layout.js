@@ -3,6 +3,8 @@
 import { useAuth } from '@/hooks/auth'
 // import Navigation from '@/app/(app)/Navigation'
 import Loading from '@/app/(app)/Loading'
+import { ToastContainer } from 'react-toastify'
+import "react-toastify/dist/ReactToastify.css";
 // import DynamicBackground from '@/components/backgroundComponent/DynamicBackground'
 
 const AppLayout = ({ children }) => {
@@ -19,6 +21,7 @@ const AppLayout = ({ children }) => {
             <main>
                 {/* <DynamicBackground/> */}
                 {children}
+                <ToastContainer position="top-right" theme="dark"/>
                 </main>
         </div>
     )
