@@ -2,9 +2,9 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { careerSchema } from "@/lib/formValidationSchemas"; // Your career validation schema
-import { createCareer, updateCareer } from "@/lib/actions"; // Career action handlers
-import React, { useState, useEffect } from "react";
+import { careerSchema } from "@/lib/formValidationSchemas";
+import { createCareer, updateCareer } from "@/lib/actions";
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import InputField from "../InputField";
@@ -24,9 +24,13 @@ const CareerForm = ({ type, data, setOpen }) => {
   const router = useRouter();
 
   const onSubmit = handleSubmit(async (formData) => {
-    setState((prev) => ({ ...prev, loading: true }));
+    console.log("Form submission triggered"); // Check if this log appears
 
-    const formattedData = {
+    setState({ ...state, loading: true });
+
+    const formattedData = new FormData();
+
+    Object.entries({
       id: formData.id || undefined,
       title: formData.title || "",
       company: formData.company || "",
@@ -34,21 +38,27 @@ const CareerForm = ({ type, data, setOpen }) => {
       description: formData.description || "",
       requirements: formData.requirements || "",
       posted_by: formData.posted_by || "",
-      image: formData.image?.[0] || null, // Optional file field
-    };
+      image: formData.image?.[0] || null,
+    }).forEach(([key, value]) => {
+      if (value !== null && value !== undefined) {
+        formattedData.append(key, value);
+      }
+    });
 
-  const result = await (type === "create"
-    ? createEvent(formattedData)
-    : updateEvent(data.id, formattedData));
+    try {
+      console.log("Sending API request with data:", formattedData); // Log the data to be sent to the API
+      const result =
+        type === "create"
+          ? await createCareer(formattedData)
+          : await updateCareer(data.id, formattedData);
 
-  if (result.success) {
-    toast(`Event ${type === "create" ? "created" : "updated"}!`);
-    setOpen(false);
-    router.refresh();
-    window.location.reload(); 
-  } else {
-    toast.error("Something went wrong!");
-  }
+      console.log("API call result:", result); // Log the API call result
+      setState(result);
+    } catch (err) {
+      console.error("Error during API call:", err);
+      toast.error("Something went wrong!");
+      setState({ success: false, error: true, loading: false });
+    }
   });
 
   useEffect(() => {
@@ -57,16 +67,12 @@ const CareerForm = ({ type, data, setOpen }) => {
       setOpen(false);
       reset();
       router.refresh();
-    } else if (state.error) {
-      toast.error("Failed to submit the form!");
     }
 
-    // Only update loading state once, without modifying the entire `state`
-    if (state.loading) {
+    if (state.success || state.error) {
       setState((prev) => ({ ...prev, loading: false }));
     }
-}, [state.success, state.error, type, setOpen, reset, router]);
-
+  }, [state.success, state.error]);
 
   return (
     <form className="flex flex-col gap-8" onSubmit={onSubmit}>
@@ -75,14 +81,6 @@ const CareerForm = ({ type, data, setOpen }) => {
       </h1>
 
       <div className="flex justify-between flex-wrap gap-4">
-        <InputField
-          label="Id"
-          name="id"
-          defaultValue={data?.id}
-          register={register}
-          error={errors?.id}
-          hidden
-        />
         <InputField
           label="Job Title"
           name="title"
@@ -125,6 +123,9 @@ const CareerForm = ({ type, data, setOpen }) => {
           register={register}
           error={errors?.posted_by}
         />
+
+        {/* Uncomment and use image input if needed */}
+        {/* 
         <div className="flex flex-col gap-2 w-full md:w-1/4">
           <label className="text-xs text-gray-500">Image (optional)</label>
           <input
@@ -139,13 +140,14 @@ const CareerForm = ({ type, data, setOpen }) => {
             </p>
           )}
         </div>
+        */}
       </div>
 
       {state.error && <span className="text-red-500">Something went wrong!</span>}
 
       <button
         type="submit"
-        className="bg-blue-400 text-white p-2 rounded-md"
+        className="bg-blue-500 text-white p-2 rounded-md"
         disabled={state.loading}
       >
         {state.loading ? "Submitting..." : type === "create" ? "Create" : "Update"}

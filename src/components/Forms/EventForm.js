@@ -133,13 +133,13 @@ const onSubmit = handleSubmit(async (formData) => {
           register={register}
           error={errors?.attendees}
         />
-        <InputField
+        {/* <InputField
           label="Event Image URL"
           name="image"
           defaultValue={data?.image}
           register={register}
           error={errors?.image}
-        />
+        /> */}
 
         <div className="flex flex-col gap-2 w-full md:w-1/4">
           <label className="text-xs text-gray-500">RSVPs</label>

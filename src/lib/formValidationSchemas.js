@@ -50,42 +50,20 @@ export const userSchema = z.object({
 
 
 export const careerSchema = z.object({
-  id: z.coerce.number().optional(), // Optional for updates
+  id: z.coerce.number().optional(),
 
-  title: z
-    .string()
-    .min(1, { message: "Title is required!" }),
+  title: z.string().min(1, { message: "Title is required!" }),
+  company: z.string().min(1, { message: "Company is required!" }),
+  location: z.string().min(1, { message: "Location is required!" }),
+  description: z.string().min(1, { message: "Description is required!" }),
+  requirements: z.string().min(1, { message: "Requirements are required!" }),
+  posted_by: z.string().min(1, { message: "Posted By is required!" }),
 
-  company: z
-    .string()
-    .min(1, { message: "Company is required!" }),
+  image: z.any().nullable(), // ✅ fixed
 
-  location: z
-    .string()
-    .min(1, { message: "Location is required!" }),
-
-  description: z
-    .string()
-    .min(1, { message: "Description is required!" }),
-
-  requirements: z
-    .string()
-    .min(1, { message: "Requirements are required!" }),
-
-  posted_by: z
-    .string()
-    .min(1, { message: "Posted By is required!" }),
-
-  image: z
-  .nullable(),
-
-  date_posted: z
-    .string()
-    .min(1, { message: "Date posted is required!" })
-    .refine((val) => !isNaN(Date.parse(val)), {
-      message: "Invalid date format!",
-    }),
+  date_posted: z.string().min(1, { message: "Date posted is required!" }),
 });
+
 
 
 
@@ -117,12 +95,7 @@ export const gallerySchema = z.object({
     .string()
     .min(1, { message: "Posted By is required!" }),
 
-  date_posted: z
-    .string()
-    .min(1, { message: "Date posted is required!" })
-    .refine((val) => !isNaN(Date.parse(val)), {
-      message: "Invalid date format!",
-    }),
+    date_posted: z.string().min(1, { message: "Date posted is required!" }),
 });
 
 

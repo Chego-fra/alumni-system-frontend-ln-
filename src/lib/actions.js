@@ -137,6 +137,10 @@ export const createCareer = async (formData) => {
       },
     });
 
+    if (response.status === 201 || response.status === 200) {
+      window.location.reload();
+    }
+
     return { success: true, error: false };
   } catch (err) {
     console.error("Create career error:", err.response?.data || err.message);
@@ -144,22 +148,34 @@ export const createCareer = async (formData) => {
   }
 };
 
-
 // Update an existing career
 export const updateCareer = async (id, formData) => {
   try {
-    const response = await axios.put(`/api/v1/career/${id}`, formData);
+    const payload = new FormData();
+
+    Object.entries(formData).forEach(([key, value]) => {
+      if (value !== null && value !== undefined) {
+        payload.append(key, value);
+      }
+    });
+
+    const response = await axios.post(`/api/v1/career/${id}?_method=PUT`, payload, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
 
     if (response.status === 200) {
-      window.location.reload(); // Reload the page after success
+      window.location.reload();
     }
 
     return { success: true, error: false };
   } catch (err) {
-    console.error("Update career error:", err);
+    console.error("Update career error:", err.response?.data || err.message);
     return { success: false, error: true };
   }
 };
+
 
 // Delete a career
 export const deleteCareer = async (id) => {
