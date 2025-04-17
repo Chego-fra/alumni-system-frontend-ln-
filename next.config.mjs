@@ -16,9 +16,21 @@ const nextConfig = {
       "tse6.mm.bing.net",
       "www.pexels.com",
       "youtu.be",
-      "www.youtube.com"
+      "www.youtube.com",
+      "localhost"
     ],
   },
+
+  async rewrites() {
+    return [
+      {
+        source: "/storage/:path*",
+        destination: "http://localhost:8000/storage/:path*",
+      },
+    ];
+  },
 };
+
+
 
 export default nextConfig;

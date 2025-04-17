@@ -14,8 +14,8 @@ const EventCalendar = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const res = await axios.get("/api/events");
-        setEvents(res.data.data.slice(0, 2)); 
+        const res = await axios.get("/api/v1/events");
+        setEvents(res.data.data.slice(0, 4)); 
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error('Error fetching counts:', error);
@@ -45,10 +45,10 @@ const EventCalendar = () => {
               key={event.id}
             >
               <div className="flex items-center justify-between">
-                <h1 className="font-semibold text-gray-600">{event.title}</h1>
-                <span className="text-gray-300 text-xs">{event.time}</span>
+                <h1 className="font-semibold text-gray-600">{event.attributes.title}</h1>
+                <span className="text-gray-300 text-xs">{event.attributes.time}</span>
               </div>
-              <p className="mt-2 text-gray-400 text-sm">{event.description}</p>
+              <p className="mt-2 text-gray-400 text-sm">{event.attributes.description}</p>
             </div>
           ))
         ) : (

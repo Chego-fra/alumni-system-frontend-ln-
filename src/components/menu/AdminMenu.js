@@ -12,10 +12,16 @@ const AdminmenuItems = [
                 href: "/dashboard/admin"
             },
             {
-                icon: "/user.png",
-                label: "Alumni",
-                href: "/dashboard/admin/list/alumni"
-            },
+                icon: "/profile.png",
+                label: "users",
+                href: "/dashboard/admin/list/user",
+              },
+            
+            // {
+            //     icon: "/user.png",
+            //     label: "Alumni",
+            //     href: "/dashboard/admin/list/alumni"
+            // },
             {
                 icon: "/career.png",
                 label: "Career",
@@ -35,6 +41,12 @@ const AdminmenuItems = [
                 icon: "/resources.png",
                 label: "Resources",
                 href: "/dashboard/admin/list/resource"
+            },
+
+            {
+                icon: "/rsvp.jpg",
+                label: "RSVP",
+                href: "/dashboard/admin/list/rsvp"
             },
         ]
     },

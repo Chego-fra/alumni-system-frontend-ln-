@@ -20,8 +20,8 @@ const CareerBarChart = () => {
   useEffect(() => {
     const fetchCareerData = async () => {
       try {
-        const res = await axios.get("/api/careers"); // Adjust API endpoint if needed
-        const careers = res.data.data; // Array of all career posts
+        const res = await axios.get("/api/v1/career"); // Adjust API endpoint if needed
+        const careers = res.data.data.map(c => c.attributes);
 
         // Aggregate career data by month
         const monthlyData = careers.reduce((acc, career) => {

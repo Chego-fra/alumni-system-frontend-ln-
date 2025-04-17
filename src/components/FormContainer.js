@@ -1,76 +1,101 @@
 import { useEffect, useState } from "react";
 import FormModal from "./FormModal";
-import { useAuth } from "@/hooks/auth"; // Using auth hook
+import { useAuth } from "@/hooks/auth";
 import axios from "@/lib/axios";
 
 const FormContainer = ({ table, type, data, id }) => {
   const [relatedData, setRelatedData] = useState({});
-  const { user } = useAuth(); // Get authenticated user
+  const { user } = useAuth();
 
   useEffect(() => {
+    if (!user || type === "delete") return;
+
     const fetchData = async () => {
-      if (type === "delete") return;
-      if (!user) return; // Ensure user is available before fetching
-
       try {
-        let alumni = [];
-        let careers = [];
-        let careerReplies = [];
-        let events = [];
-        let rsvps = [];
+        const fetchMap = {
+          alumni: async () => {
+            const [careers, careerReplies, rsvps] = await Promise.all([
+              axios.get("/api/v1/career"),
+              axios.get("/api/v1/careerReplies"),
+              axios.get("/api/v1/rSVP"),
+            ]);
+            return {
+              careers: careers.data.data,
+              careerReplies: careerReplies.data.data,
+              rsvps: rsvps.data.data,
+            };
+          },
 
-        switch (table) {
-          case "alumni":
-            careers = await axios.get("/api/careers");
-            setRelatedData({ careers: careers.data });
-            break;
+          career: async () => {
+            const [alumni, careerReplies] = await Promise.all([
+              axios.get("/api/v1/alumniProfile"),
+              axios.get("/api/v1/careerReplies"),
+            ]);
+            return {
+              alumni: alumni.data.data,
+              careerReplies: careerReplies.data.data,
+            };
+          },
 
-          case "career":
-            alumni = await axios.get("/api/alumni");
-            careerReplies = await axios.get("/api/career-replies");
-            setRelatedData({
-              alumni: alumni.data,
-              careerReplies: careerReplies.data,
-            });
-            break;
+          careerReply: async () => {
+            const [careers, alumni] = await Promise.all([
+              axios.get("/api/v1/career"),
+              axios.get("/api/v1/alumniProfile"),
+            ]);
+            return {
+              careers: careers.data.data,
+              alumni: alumni.data.data,
+            };
+          },
 
-          case "careerReply":
-            careers = await axios.get("/api/careers");
-            alumni = await axios.get("/api/alumni");
-            setRelatedData({ careers: careers.data, alumni: alumni.data });
-            break;
+          event: async () => {
+            const rsvps = await axios.get("/api/v1/rSVP");
+            return { rsvps: rsvps.data.data };
+          },
 
-          case "event":
-            rsvps = await axios.get("/api/rsvps");
-            setRelatedData({ rsvps: rsvps.data });
-            break;
+          rsvp: async () => {
+            const [events, alumni] = await Promise.all([
+              axios.get("/api/v1/events"),
+              axios.get("/api/v1/alumniProfile"),
+            ]);
+            return {
+              events: events.data.data,
+              alumni: alumni.data.data,
+            };
+          },
 
-          case "rsvp":
-            events = await axios.get("/api/events");
-            alumni = await axios.get("/api/alumni");
-            setRelatedData({ events: events.data, alumni: alumni.data });
-            break;
+          gallery: async () => {
+            const alumni = await axios.get("/api/v1/alumniProfile");
+            return { alumni: alumni.data.data };
+          },
 
-          case "gallery":
-          case "resource":
-            alumni = await axios.get("/api/alumni");
-            setRelatedData({ alumni: alumni.data });
-            break;
+          resource: async () => {
+            const alumni = await axios.get("/api/v1/alumniProfile");
+            return { alumni: alumni.data.data };
+          },
+        };
 
-          default:
-            break;
+        if (fetchMap[table]) {
+          const result = await fetchMap[table]();
+          setRelatedData(result);
         }
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching related data:", error);
       }
     };
 
     fetchData();
-  }, [table, type, user]); // Added `user` as a dependency
+  }, [table, type, user]);
 
   return (
     <div>
-      <FormModal table={table} type={type} data={data} id={id} relatedData={relatedData} />
+      <FormModal
+        table={table}
+        type={type}
+        data={data} // this will prefill the form on update
+        id={id}
+        relatedData={relatedData}
+      />
     </div>
   );
 };

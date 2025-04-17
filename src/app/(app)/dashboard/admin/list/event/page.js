@@ -9,7 +9,7 @@ import Pagination from "@/components/Pagination";
 import axios from "@/lib/axios";
 import Table from "@/components/Table";
 
-const API_URL = "/api/events";
+const API_URL = "/api/v1/events";
 
 const EventListPage = () => {
   const searchParams = useSearchParams(); 
@@ -29,15 +29,17 @@ const EventListPage = () => {
       const response = await axios.get(API_URL, {
         params: { search, page },
       });
-
-      setEvents(response.data.data);
-      setTotalPages(response.data.last_page);
+  
+      setEvents(response.data.data); // <- data is the array of events
+      setTotalPages(response.data.meta.last_page); // <- meta has pagination info
     } catch (error) {
       console.error("Error fetching events:", error);
     } finally {
       setLoading(false);
     }
   };
+  
+  
 
   const columns = [
     { header: "Title", accessor: "title" },
@@ -50,11 +52,11 @@ const EventListPage = () => {
 
   const renderRow = (item) => (
     <tr key={item.id} className="border-b border-gray-200 even:bg-gray-100 hover:bg-purpleLight">
-      <td className="p-4">{item.title}</td>
-      <td>{item.date}</td>
-      <td>{item.time}</td>
-      <td>{item.location}</td>
-      <td>{item.organizer}</td>
+      <td className="p-4">{item.attributes.title}</td>
+      <td>{item.attributes.date}</td>
+      <td>{item.attributes.time}</td>
+      <td>{item.attributes.location}</td>
+      <td>{item.attributes.organizer}</td>
       <td>
         <div className="flex items-center gap-2">
           <FormContainer table="event" type="update" data={item} />

@@ -11,7 +11,7 @@ const UserCards = ({ type }) => {
   useEffect(() => {
     const fetchCounts = async () => {
       try {
-        const res = await axios.get('/api/dashboard/counts'); // Adjust URL if needed
+        const res = await axios.get('/api/v1/dashboardCount'); // Adjust URL if needed
         const data = res.data; // Axios automatically parses JSON
 
         // Set count dynamically based on the "type" prop

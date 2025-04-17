@@ -1,6 +1,6 @@
 "use client"
 import Image from 'next/image';
-import styles from './galleryComponent.module.css';
+import styles from './GalleryComponent.module.css';
 import { motion } from 'framer-motion'; 
 import { FileText,  User,  } from 'lucide-react';
 

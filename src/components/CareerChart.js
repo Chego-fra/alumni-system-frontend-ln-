@@ -20,24 +20,32 @@ const CareerChart = () => {
   useEffect(() => {
     const fetchCareerData = async () => {
       try {
-        const res = await axios.get("/api/careers");
-        const careers = res.data.data;
-
-        // Transform data for the chart (e.g., count careers per month)
+        const res = await axios.get("/api/v1/career");
+        const careers = res.data.data.map(c => c.attributes);
+    
+        console.log("Career attributes:", careers);
+    
         const monthlyData = careers.reduce((acc, career) => {
-          const month = new Date(career.date_posted).toLocaleString("en-US", { month: "short" });
+          const datePosted = career.date_posted;
+          console.log("Processing date:", datePosted);
+    
+          const month = new Date(datePosted).toLocaleString("en-US", { month: "short" });
+    
           if (!acc[month]) {
             acc[month] = { name: month, postings: 0 };
           }
           acc[month].postings += 1;
           return acc;
         }, {});
-
+    
+        console.log("Transformed chart data:", Object.values(monthlyData));
+    
         setData(Object.values(monthlyData));
       } catch (error) {
-        error("Error fetching career data:", error);
+        console.error("Error fetching career data:", error);
       }
     };
+    
 
     fetchCareerData();
   }, []);

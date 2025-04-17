@@ -34,7 +34,7 @@ const AdminDashboard = () => {
           {/* middle charts */}
           <div className="flex gap-4 flex-col lg:flex-row ">
             {/* count chart */}
-              <div className="w-full h-[465px]">
+              <div className="w-full h-[650px]">
               <CareerBarChart/>
               </div>
               {/* attendance chart */}
