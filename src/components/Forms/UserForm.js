@@ -17,7 +17,7 @@ const UserForm = ({ type, data, setOpen }) => {
     reset,
   } = useForm({
     resolver: zodResolver(userSchema),
-    defaultValues: data?.attributes || {}, // Match the resource structure
+    defaultValues: data?.attributes || {}, 
   });
 
   const [state, setState] = useState({ success: false, error: false, loading: false });

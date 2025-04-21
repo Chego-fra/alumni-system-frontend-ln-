@@ -17,11 +17,11 @@ const AdminmenuItems = [
                 href: "/dashboard/admin/list/user",
               },
             
-            // {
-            //     icon: "/user.png",
-            //     label: "Alumni",
-            //     href: "/dashboard/admin/list/alumni"
-            // },
+            {
+                icon: "/user.png",
+                label: "Alumni",
+                href: "/dashboard/admin/list/alumni"
+            },
             {
                 icon: "/career.png",
                 label: "Career",

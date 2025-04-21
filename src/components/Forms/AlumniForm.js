@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { alumnichema } from "@/lib/formValidationSchemas"; // Event validation schema
+import { alumniSchema } from "@/lib/formValidationSchemas"; // Event validation schema
 import { createAlumni, updateAlumni } from "@/lib/actions"; // Import the actions for create and update
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
@@ -17,24 +17,15 @@ const AlumniForm = ({ type, data, setOpen, relatedData }) => {
     formState: { errors },
     reset,
   } = useForm({
-    resolver: zodResolver(alumnichema),
-    defaultValues: {
-      name: data?.name || "",
-      graduation_year: data?.graduation_year || "",
-      major: data?.major || "",
-      company: data?.company || "",
-      location: data?.location || "",
-      image: data?.image || null,
-      profile_summary: data?.profile_summary || "",
-      rsvpId: data?.rsvps?.[0]?.id || "", // Example of selecting the first RSVP if available
-    },
+    resolver: zodResolver(alumniSchema),
+    defaultValues: data?.attributes || {}, 
   });
 
   const [state, setState] = useState({ success: false, error: false, loading: false });
   const router = useRouter();
 
   const onSubmit = handleSubmit(async (formData) => {
-    setState((prev) => ({ ...prev, loading: true })); // Start loading
+    setState((prev) => ({ ...prev, loading: true }));
 
     const formattedData = {
       id: formData.id || undefined,
@@ -50,11 +41,9 @@ const AlumniForm = ({ type, data, setOpen, relatedData }) => {
 
     let result;
     try {
-      if (type === "create") {
-        result = await createAlumni(formattedData);
-      } else {
-        result = await updateAlumni(data.id, formattedData);
-      }
+      result = type === "create"
+        ? await createAlumni(formattedData)
+        : await  updateAlumni(data.id, formattedData);
 
       setState(result);
     } catch (error) {
@@ -65,15 +54,16 @@ const AlumniForm = ({ type, data, setOpen, relatedData }) => {
 
   useEffect(() => {
     if (state.success) {
-      toast.success(`Event has been ${type === "create" ? "created" : "updated"}!`);
+      toast.success(`Alumni has been ${type === "create" ? "created" : "updated"}!`);
       setOpen(false);
-      reset(); // Reset form after successful submission
+      reset();
       router.refresh();
-    } else if (state.error) {
-      toast.error("Failed to submit the form!");
     }
-    setState((prev) => ({ ...prev, loading: false })); // Stop loading
-  }, [state, router, type, setOpen, reset]);
+  
+    if (state.success || state.error) {
+      setState((prev) => ({ ...prev, loading: false }));
+    }
+  }, [state.success, state.error]);
 
   // Ensure `rsvps` is defined and is an array before trying to map over it
   const { rsvps = [] } = relatedData || {};
@@ -96,45 +86,45 @@ const AlumniForm = ({ type, data, setOpen, relatedData }) => {
         <InputField
           label="Name"
           name="name"
-          defaultValue={data?.name}
+          defaultValue={data?.attributes?.name}
           register={register}
           error={errors?.name}
         />
         <InputField
           label="Graduation Year"
           name="graduation_year"
-          defaultValue={data?.graduation_year}
+          defaultValue={data?.attributes?.graduation_year}
           register={register}
           error={errors?.graduation_year}
         />
         <InputField
           label="Major"
           name="major"
-          defaultValue={data?.major}
+          defaultValue={data?.attributes?.major}
           register={register}
           error={errors?.major}
         />
         <InputField
           label="Company"
           name="company"
-          defaultValue={data?.company}
+          defaultValue={data?.attributes?.company}
           register={register}
           error={errors?.company}
         />
         <InputField
           label="Location"
           name="location"
-          defaultValue={data?.location}
+          defaultValue={data?.attributes?.location}
           register={register}
           error={errors?.location}
         />
-        <InputField
+        {/* <InputField
           label="Profile Summary"
           name="profile_summary"
-          defaultValue={data?.profile_summary}
+          defaultValue={data?.attributes?.profile_summary}
           register={register}
           error={errors?.profile_summary}
-        />
+        /> */}
         <div className="flex flex-col gap-2 w-full md:w-1/4">
           <label className="text-xs text-gray-500">RSVP</label>
           <select

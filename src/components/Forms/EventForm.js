@@ -17,6 +17,7 @@ const EventForm = ({ type, data, setOpen, relatedData }) => {
     formState: { errors },
   } = useForm({
     resolver: zodResolver(eventSchema),
+    defaultValues: data?.attributes || {},
   });
 
   const [state, formAction] = useFormState(

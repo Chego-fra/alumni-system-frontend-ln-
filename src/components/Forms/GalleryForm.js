@@ -19,51 +19,50 @@ const GalleryForm = ({ type, data, setOpen, relatedData }) => {
     reset,
   } = useForm({
     resolver: zodResolver(gallerySchema),
-    defaultValues: data || {}, // Prefill with data if available
+    defaultValues: data?.attributes || {}, 
   });
 
   const [state, setState] = useState({ success: false, error: false, loading: false });
   const router = useRouter();
 
   const onSubmit = handleSubmit(async (formData) => {
-    setState((prev) => ({ ...prev, loading: true })); // Start loading
+    setState((prev) => ({ ...prev, loading: true }));
     
     // Format the data for create or update
-    const formattedData = {
-      id: formData.id || undefined,
-      title: formData.title || "",
-      short_title: formData.short_title || "",
-      description: formData.description || "",
-      type: formData.type || "default", // Default type
-      file_path: formData.file_path?.[0] || "", // Handle file upload
-      posted_by: formData.posted_by || "", // Assuming `posted_by` is a string or ID
+   const formattedData = {
+    id: formData.id || undefined,
+    title: formData.title || "",
+    short_title: formData.short_title || "",
+    description: formData.description || "",
+    file_path: formData.file_path?.[0] || "", // Handle file upload
+    posted_by: formData.posted_by || "", // Assuming `posted_by` is a string or ID
     };
 
-  const result = await (type === "create"
-    ? createEvent(formattedData)
-    : updateEvent(data.id, formattedData));
+    let result;
+    try {
+      result = type === "create"
+        ? await createGallery(formattedData)
+        : await  updateGallery(data.id, formattedData);
 
-  if (result.success) {
-    toast(`Event ${type === "create" ? "created" : "updated"}!`);
-    setOpen(false);
-    router.refresh();
-    window.location.reload(); 
-  } else {
-    toast.error("Something went wrong!");
-  }
+      setState(result);
+    } catch (error) {
+      toast.error("Something went wrong!");
+      setState({ success: false, error: true, loading: false });
+    }
   });
 
   useEffect(() => {
     if (state.success) {
-      toast.success(`Gallery has been ${type === "create" ? "created" : "updated"}!`);
+      toast.success(`User has been ${type === "create" ? "created" : "updated"}!`);
       setOpen(false);
-      reset(); // Reset form after successful submission
+      reset();
       router.refresh();
-    } else if (state.error) {
-      toast.error("Failed to submit the form!");
     }
-    setState((prev) => ({ ...prev, loading: false })); // Stop loading
-  }, [state, router, type, setOpen, reset]);
+  
+    if (state.success || state.error) {
+      setState((prev) => ({ ...prev, loading: false }));
+    }
+  }, [state.success, state.error]);
 
   // Ensure `postedBy` is defined and is an object with necessary data
   const { postedBy = {} } = relatedData || {};
@@ -86,49 +85,50 @@ const GalleryForm = ({ type, data, setOpen, relatedData }) => {
         <InputField
           label="Gallery title"
           name="title"
-          defaultValue={data?.title}
+          defaultValue={data?.attributes?.title}
           register={register}
           error={errors?.title}
         />
-        <InputField
+        {/* <InputField
           label="Short title"
           name="short_title"
-          defaultValue={data?.short_title}
+          defaultValue={data?.attributes?.short_title}
           register={register}
           error={errors?.short_title}
-        />
+        /> */}
         <InputField
           label="Description"
           name="description"
-          defaultValue={data?.description}
+          defaultValue={data?.attributes?.description}
           register={register}
           error={errors?.description}
         />
         <InputField
           label="Type"
           name="type"
-          defaultValue={data?.type}
+          defaultValue={data?.attributes?.type}
           register={register}
           error={errors?.type}
         />
         <InputField
-          label="File"
+          label="File path"
           name="file_path"
-          defaultValue={data?.file_path}
+          defaultValue={data?.attributes?.file_path}
           register={register}
           error={errors?.file_path}
-          type="file"
         />
         <InputField
           label="Posted by"
           name="posted_by"
-          defaultValue={data?.posted_by}
+          defaultValue={data?.attributes?.posted_by}
           register={register}
           error={errors?.posted_by}
         />
+
+
       </div>
 
-      <div className="flex flex-col gap-2 w-full md:w-1/4">
+      {/* <div className="flex flex-col gap-2 w-full md:w-1/4">
         <label className="text-xs text-gray-500">Posted By</label>
         <select
           className="ring-[1.5px] ring-gray-300 p-2 rounded-md text-sm w-full"
@@ -148,7 +148,7 @@ const GalleryForm = ({ type, data, setOpen, relatedData }) => {
             {errors.posted_by.message.toString()}
           </p>
         )}
-      </div>
+      </div> */}
 
       {state.error && <span className="text-red-500">Something went wrong!</span>}
       

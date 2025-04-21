@@ -1,5 +1,60 @@
 import { z } from "zod";
 
+
+
+export const alumniSchema = z.object({
+  id: z.coerce.number().optional(), 
+
+  name: z
+    .string()
+    .min(1, { message: "Name is required!" }),
+
+  image: z
+    .string()
+    .optional()
+    .or(z.literal("")), 
+  graduation_year: z
+    .coerce.number({
+      invalid_type_error: "Graduation year must be a number.",
+    })
+    .int({ message: "Graduation year must be an integer." }),
+
+  major: z
+    .string()
+    .min(1, { message: "Major is required!" }),
+
+  company: z
+    .string()
+    .optional()
+    .or(z.literal("")),
+
+  location: z
+    .string()
+    .optional()
+    .or(z.literal("")),
+
+  linkedin: z
+    .string()
+    .url({ message: "LinkedIn must be a valid URL." })
+    .optional()
+    .or(z.literal("")),
+
+  twitter: z
+    .string()
+    .url({ message: "Twitter must be a valid URL." })
+    .optional()
+    .or(z.literal("")),
+});
+
+
+
+
+
+
+
+
+
+
 export const eventSchema = z.object({
   id: z.coerce.number().optional(), // Optional
   title: z.string().min(1, { message: "Title is required!" }), // Match required
@@ -69,7 +124,7 @@ export const careerSchema = z.object({
 
 
 export const gallerySchema = z.object({
-  id: z.coerce.number().optional(), // Optional for updates
+  id: z.coerce.number().optional(),
 
   title: z
     .string()
@@ -92,10 +147,9 @@ export const gallerySchema = z.object({
     .nullable(),
 
   posted_by: z
-    .string()
+    .coerce
+    .number()
     .min(1, { message: "Posted By is required!" }),
-
-    date_posted: z.string().min(1, { message: "Date posted is required!" }),
 });
 
 

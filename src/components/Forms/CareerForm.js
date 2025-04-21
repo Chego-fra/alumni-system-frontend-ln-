@@ -17,20 +17,16 @@ const CareerForm = ({ type, data, setOpen }) => {
     reset,
   } = useForm({
     resolver: zodResolver(careerSchema),
-    defaultValues: data || {},
+    defaultValues: data?.attributes || {},
   });
 
   const [state, setState] = useState({ success: false, error: false, loading: false });
   const router = useRouter();
 
   const onSubmit = handleSubmit(async (formData) => {
-    console.log("Form submission triggered"); // Check if this log appears
+    setState((prev) => ({ ...prev, loading: true }));
 
-    setState({ ...state, loading: true });
-
-    const formattedData = new FormData();
-
-    Object.entries({
+    const formattedData = {
       id: formData.id || undefined,
       title: formData.title || "",
       company: formData.company || "",
@@ -38,26 +34,23 @@ const CareerForm = ({ type, data, setOpen }) => {
       description: formData.description || "",
       requirements: formData.requirements || "",
       posted_by: formData.posted_by || "",
+      date_posted: formData.date_posted || "", 
       image: formData.image?.[0] || null,
-    }).forEach(([key, value]) => {
-      if (value !== null && value !== undefined) {
-        formattedData.append(key, value);
-      }
-    });
+    };
+    
+    
 
+    let career;
     try {
-      console.log("Sending API request with data:", formattedData); // Log the data to be sent to the API
-      const result =
-        type === "create"
-          ? await createCareer(formattedData)
-          : await updateCareer(data.id, formattedData);
+      career = type === "create"
+        ? await createCareer(formattedData)
+        : await updateCareer(data.id, formattedData);
 
-      console.log("API call result:", result); // Log the API call result
-      setState(result);
-    } catch (err) {
-      console.error("Error during API call:", err);
+      setState(career);
+    } catch (error) {
       toast.error("Something went wrong!");
       setState({ success: false, error: true, loading: false });
+      console.error("Update career error:", error.response?.data || error.message);
     }
   });
 
@@ -68,7 +61,7 @@ const CareerForm = ({ type, data, setOpen }) => {
       reset();
       router.refresh();
     }
-
+  
     if (state.success || state.error) {
       setState((prev) => ({ ...prev, loading: false }));
     }
@@ -84,45 +77,53 @@ const CareerForm = ({ type, data, setOpen }) => {
         <InputField
           label="Job Title"
           name="title"
-          defaultValue={data?.title}
+          defaultValue={data?.attributes?.title}
           register={register}
           error={errors?.title}
         />
         <InputField
           label="Company"
           name="company"
-          defaultValue={data?.company}
+          defaultValue={data?.attributes?.company}
           register={register}
           error={errors?.company}
         />
         <InputField
           label="Location"
           name="location"
-          defaultValue={data?.location}
+          defaultValue={data?.attributes?.location}
           register={register}
           error={errors?.location}
         />
         <InputField
           label="Description"
           name="description"
-          defaultValue={data?.description}
+          defaultValue={data?.attributes?.description}
           register={register}
           error={errors?.description}
         />
         <InputField
           label="Requirements"
           name="requirements"
-          defaultValue={data?.requirements}
+          defaultValue={data?.attributes?.requirements}
           register={register}
           error={errors?.requirements}
         />
         <InputField
           label="Posted By (User ID)"
           name="posted_by"
-          defaultValue={data?.posted_by}
+          defaultValue={data?.attributes?.posted_by}
           register={register}
           error={errors?.posted_by}
         />
+         <InputField
+          label="Date Posted"
+          name="date_posted"
+          defaultValue={data?.attributes?.date_posted}
+          register={register}
+          error={errors?.date_posted}
+        />
+
 
         {/* Uncomment and use image input if needed */}
         {/* 

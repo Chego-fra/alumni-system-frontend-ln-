@@ -29,11 +29,11 @@ const AlumniListPage = () => {
       const response = await axios.get(API_URL, {
         params: { search, page },
       });
-
-      setAlumni(response.data.data);
-      setTotalPages(response.data.meta.last_page);
+  
+      setAlumni(response.data.data); 
+      setTotalPages(response.data.meta.last_page); 
     } catch (error) {
-      console.error("Error fetching alumni:", error);
+      console.error("Error fetching users:", error);
     } finally {
       setLoading(false);
     }
@@ -57,8 +57,8 @@ const AlumniListPage = () => {
       <td>{item.attributes.location}</td>
       <td>
         <div className="flex items-center gap-2">
-          <FormContainer table="alumniprofile" type="update" data={item} />
-          <FormContainer table="alumniprofile" type="delete" id={item.id} />
+          <FormContainer table="alumni" type="update" data={item} />
+          <FormContainer table="alumni" type="delete" id={item.id} />
         </div>
       </td>
     </tr>
@@ -77,7 +77,7 @@ const AlumniListPage = () => {
           <button className="w-8 h-8 flex items-center justify-center rounded-full bg-yellow-500">
             <Image src="/sort.png" alt="Sort" width={14} height={14} />
           </button>
-          <FormContainer table="alumniprofile" type="create" />
+          <FormContainer table="alumni" type="create" />
         </div>
       </div>
 

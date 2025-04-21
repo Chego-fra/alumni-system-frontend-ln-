@@ -27,6 +27,9 @@ const ResourceForm  = dynamic(() => import("./Forms/ResourceForm"), {
 const RsvpForm  = dynamic(() => import("./Forms/RsvpForm"), {
   loading: () => <h1>Loading...</h1>,
 });
+const AlumniForm  = dynamic(() => import("./Forms/AlumniForm"), {
+  loading: () => <h1>Loading...</h1>,
+});
 
 // Map delete actions to table types
 const deleteActionMap = {
@@ -36,6 +39,7 @@ const deleteActionMap = {
   gallery: deleteGallery ,
   resource: deleteResource,
   rsvp: deleteRSVP,
+  alumni:  deleteAlumni,
 };
 
 // Forms mapping
@@ -57,6 +61,9 @@ const forms = {
   ),
   rsvp: (setOpen, type, data, relatedData) => (
     <RsvpForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />
+  ),
+  alumni: (setOpen, type, data, relatedData) => (
+    <AlumniForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />
   ),
 };
 

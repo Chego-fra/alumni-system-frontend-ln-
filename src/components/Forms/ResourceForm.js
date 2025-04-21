@@ -19,17 +19,16 @@ const ResourceForm = ({ type, data, setOpen, relatedData }) => {
     reset,
   } = useForm({
     resolver: zodResolver(resourceSchema),
-    defaultValues: data || {}, // Prefill with data if available
+    defaultValues: data?.attributes || {}, 
   });
 
   const [state, setState] = useState({ success: false, error: false, loading: false });
   const router = useRouter();
 
-  const onSubmit = handleSubmit(async (formData) => {
-    setState((prev) => ({ ...prev, loading: true })); // Start loading
-    
-    // Format the data for create or update
-    const formattedData = {
+   const onSubmit = handleSubmit(async (formData) => {
+     setState((prev) => ({ ...prev, loading: true }));
+ 
+     const formattedData = {
       id: formData.id || undefined,
       title: formData.title || "",
       category: formData.category || "",
@@ -40,33 +39,33 @@ const ResourceForm = ({ type, data, setOpen, relatedData }) => {
       video_url: formData.video_url || "",
       posted_by: formData.posted_by || "",
       image: formData.image || "",
-    };
-
-  const result = await (type === "create"
-    ? createEvent(formattedData)
-    : updateEvent(data.id, formattedData));
-
-  if (result.success) {
-    toast(`Event ${type === "create" ? "created" : "updated"}!`);
-    setOpen(false);
-    router.refresh();
-    window.location.reload(); 
-  } else {
-    toast.error("Something went wrong!");
-  }
-  });
-
-  useEffect(() => {
-    if (state.success) {
-      toast.success(`Resource has been ${type === "create" ? "created" : "updated"}!`);
-      setOpen(false);
-      reset(); // Reset form after successful submission
-      router.refresh();
-    } else if (state.error) {
-      toast.error("Failed to submit the form!");
-    }
-    setState((prev) => ({ ...prev, loading: false })); // Stop loading
-  }, [state, router, type, setOpen, reset]);
+     };
+ 
+     let result;
+     try {
+       result = type === "create"
+         ? await createResource(formattedData)
+         : await updateResource(data.id, formattedData);
+ 
+       setState(result);
+     } catch (error) {
+       toast.error("Something went wrong!");
+       setState({ success: false, error: true, loading: false });
+     }
+   });
+ 
+   useEffect(() => {
+     if (state.success) {
+       toast.success(`User has been ${type === "create" ? "created" : "updated"}!`);
+       setOpen(false);
+       reset();
+       router.refresh();
+     }
+   
+     if (state.success || state.error) {
+       setState((prev) => ({ ...prev, loading: false }));
+     }
+   }, [state.success, state.error]);
 
   return (
     <form className="flex flex-col gap-8" onSubmit={onSubmit}>
@@ -86,63 +85,63 @@ const ResourceForm = ({ type, data, setOpen, relatedData }) => {
         <InputField
           label="Title"
           name="title"
-          defaultValue={data?.title}
+          defaultValue={data?.attributes?.title}
           register={register}
           error={errors?.title}
         />
         <InputField
           label="Category"
           name="category"
-          defaultValue={data?.category}
+          defaultValue={data?.attributes?.category}
           register={register}
           error={errors?.category}
         />
         <InputField
           label="Category Tag"
           name="category_tag"
-          defaultValue={data?.category_tag}
+          defaultValue={data?.attributes?.category_tag}
           register={register}
           error={errors?.category_tag}
         />
         <InputField
           label="Description"
           name="description"
-          defaultValue={data?.description}
+          defaultValue={data?.attributes?.description}
           register={register}
           error={errors?.description}
         />
         <InputField
           label="Short Description"
           name="short_description"
-          defaultValue={data?.short_description}
+          defaultValue={data?.attributes?.short_description}
           register={register}
           error={errors?.short_description}
         />
         <InputField
           label="File URL"
           name="file_url"
-          defaultValue={data?.file_url}
+          defaultValue={data?.attributes?.file_url}
           register={register}
           error={errors?.file_url}
         />
         <InputField
           label="Video URL"
           name="video_url"
-          defaultValue={data?.video_url}
+          defaultValue={data?.attributes?.video_url}
           register={register}
           error={errors?.video_url}
         />
         <InputField
           label="Posted By"
           name="posted_by"
-          defaultValue={data?.posted_by}
+          defaultValue={data?.attributes?.posted_by}
           register={register}
           error={errors?.posted_by}
         />
         <InputField
           label="Image"
           name="image"
-          defaultValue={data?.image}
+          defaultValue={data?.attributes?.image}
           register={register}
           error={errors?.image}
         />

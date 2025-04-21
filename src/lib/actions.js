@@ -6,6 +6,61 @@ import { toast } from "react-toastify"; // Add toast for user feedback
 import { useRouter } from "next/navigation"; // Use for redirection after success
 import { toFormData } from "./utils"; // 👈 import the helper
 
+
+
+// Create a new user
+export const createAlumni = async (formData) => {
+  try {
+    const response = await axios.post("api/v1/alumniProfile", formData);
+
+    if (response.status === 201 || response.status === 200) {
+      window.location.reload(); // Reload the page after success
+    }
+
+    return { success: true, error: false };
+  } catch (err) {
+    console.error("Create user error:", err);
+    return { success: false, error: true };
+  }
+};
+
+// Update an existing user
+export const updateAlumni = async (id, formData) => {
+  try {
+    const response = await axios.put(`api/v1/alumniProfile/${id}`, formData);
+
+    if (response.status === 200) {
+      window.location.reload(); // Reload the page after success
+    }
+
+    return { success: true, error: false };
+  } catch (err) {
+    console.error("Update Alumni error:", err);
+    return { success: false, error: true };
+  }
+};
+
+// Delete a user
+export const deleteAlumni = async (id) => {
+  try {
+    const response = await axios.delete(`api/v1/alumniProfile/${id}`);
+
+    if (response.status === 204) {
+      window.location.reload(); // Reload the page after success
+    }
+
+    return { success: true };
+  } catch (err) {
+    console.error("Delete Alumni error:", err);
+    return { success: false };
+  }
+};
+
+
+
+
+
+
 export const createEvent = async (formData) => {
   try {
     const fd = toFormData(formData); // 👈 convert your object into FormData
@@ -120,58 +175,32 @@ export const deleteUser = async (id) => {
 
 
 
-// Create a new career
 export const createCareer = async (formData) => {
   try {
-    const payload = new FormData();
-
-    Object.entries(formData).forEach(([key, value]) => {
-      if (value !== null && value !== undefined) {
-        payload.append(key, value);
-      }
-    });
-
-    const response = await axios.post("/api/v1/career", payload, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const response = await axios.post("/api/v1/career", formData);
 
     if (response.status === 201 || response.status === 200) {
-      window.location.reload();
+      window.location.reload(); // Reload the page after success
     }
 
     return { success: true, error: false };
   } catch (err) {
-    console.error("Create career error:", err.response?.data || err.message);
+    console.error("Create user error:", err);
     return { success: false, error: true };
   }
 };
 
-// Update an existing career
 export const updateCareer = async (id, formData) => {
   try {
-    const payload = new FormData();
-
-    Object.entries(formData).forEach(([key, value]) => {
-      if (value !== null && value !== undefined) {
-        payload.append(key, value);
-      }
-    });
-
-    const response = await axios.post(`/api/v1/career/${id}?_method=PUT`, payload, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const response = await axios.put(`/api/v1/career/${id}`, formData);
 
     if (response.status === 200) {
-      window.location.reload();
+      window.location.reload(); // Reload the page after success
     }
 
     return { success: true, error: false };
   } catch (err) {
-    console.error("Update career error:", err.response?.data || err.message);
+    console.error("Update career error:", err);
     return { success: false, error: true };
   }
 };
@@ -323,61 +352,49 @@ export const deleteResource = async (id) => {
 
 
 
-
-// If RSVP doesn't require FormData, keep it simple JSON. Otherwise, use toFormData like in events.
 export const createRSVP = async (formData) => {
   try {
-    const response = await axios.post("/api/v1/rsvps", formData, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await axios.post("/api/v1/rsvps", formData);
 
-    if (response.status === 200 || response.status === 201) {
-      toast.success("RSVP created successfully!");
-      window.location.reload(); // or router.refresh() if using Next.js App Router
+    if (response.status === 201 || response.status === 200) {
+      window.location.reload(); // Reload the page after success
     }
 
     return { success: true, error: false };
   } catch (err) {
-    console.error(err);
-    toast.error("Failed to create RSVP.");
+    console.error("Create user error:", err);
     return { success: false, error: true };
   }
 };
 
+// Update an existing user
 export const updateRSVP = async (id, formData) => {
   try {
-    const response = await axios.post(`/api/v1/rsvps/${id}?_method=PUT`, formData, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await axios.put(`/api/v1/rsvps/${id}`, formData);
 
-    if (response.status === 200 || response.status === 201) {
-      toast.success("RSVP updated successfully!");
-      window.location.reload();
+    if (response.status === 200) {
+      window.location.reload(); // Reload the page after success
     }
 
     return { success: true, error: false };
   } catch (err) {
-    console.error(err);
-    toast.error("Failed to update RSVP.");
+    console.error("Update Alumni error:", err);
     return { success: false, error: true };
   }
 };
 
+// Delete a user
 export const deleteRSVP = async (id) => {
   try {
     const response = await axios.delete(`/api/v1/rsvps/${id}`);
+
     if (response.status === 204) {
-      toast.success("RSVP deleted successfully!");
-      window.location.reload();
+      window.location.reload(); // Reload the page after success
     }
+
     return { success: true };
-  } catch (error) {
-    console.error("Failed to delete RSVP:", error);
-    toast.error("Failed to delete RSVP.");
+  } catch (err) {
+    console.error("Delete Alumni error:", err);
     return { success: false };
   }
 };
